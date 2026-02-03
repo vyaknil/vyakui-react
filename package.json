@@ -26,7 +26,7 @@
   "type": "commonjs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vyaknil/vui-react.git"
+    "url": "git+https://github.com/vyaknil/vyakui-react.git"
   },
   "peerDependencies": {
     "react": "^19",
