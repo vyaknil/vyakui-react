@@ -1,0 +1,93 @@
+# vyakUI
+#### React
+
+## Installation
+
+```bash
+npm install vyakui-react
+```
+
+### Root layout
+#### React
+```tsx
+import { VRegistry } from 'vyakui-react';
+import { HomePage } from './pages/HomePage';
+
+export const App = () => (
+  <VRegistry>
+    <HomePage />
+  </VRegistry>
+);
+```
+
+#### Next.js
+```tsx
+import { VRegistry } from 'vyakui-react';
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        <VRegistry>{children}</VRegistry>
+      </body>
+    </html>
+  );
+}
+```
+
+## Styled component
+
+### Polymorphism (`as` prop)
+
+Use the `as` prop to render any HTML element. TypeScript will automatically enforce the correct attributes for that element.
+
+```tsx
+<Styled 
+  as="a" 
+  href="https://github.com" 
+  vStyle={{ textDecoration: 'none' }}
+>
+  GitHub Link
+</Styled>
+```
+
+### Styling with `vStyle` prop
+
+```tsx
+<Styled
+  as="button"
+  vStyle={{
+    padding: '10px 20px',
+    border: '1px solid #ccc',
+    backgroundColor: '#fff',
+    transition: '0.2s',
+
+    // Pseudo-classes
+    ':hover': {
+      backgroundColor: '#f0f0f0',
+      borderColor: '#999',
+    },
+
+    // Media Queries
+    '@media (max-width: 768px)': {
+      width: '100%',
+      padding: '15px',
+    },
+
+    // Nested selectors
+    '& span': {
+      color: 'red',
+    }
+  }}
+>
+  Interactive <span>Button</span>
+</Styled>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `as` | `ElementType` | `'div'` | The HTML tag or component to render. |
+| `vStyle` | `VStyle` | `undefined` | CSS object supporting nesting and at-rules. |
+| `...props` | `Attributes` | - | Any valid attribute for the element defined in `as`. |
