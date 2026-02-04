@@ -2,7 +2,7 @@
   "name": "vyakui-react",
   "private": false,
   "version": "1.1.0",
-  "description": "",
+  "description": "React/Next.js component library ",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",

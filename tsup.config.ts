@@ -6,7 +6,7 @@ export default defineConfig({
   dts: true,
   minify: true,
   clean: true,
-  external: ['react'],
+  external: ['next/link', 'next/navigation', 'react'],
   banner: {
     js: '"use client";',
   },

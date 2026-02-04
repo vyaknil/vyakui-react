@@ -1,26 +1,51 @@
 "use client";
-import React, { useMemo, useInsertionEffect } from 'react';
+import React, { useMemo, useInsertionEffect, forwardRef } from 'react';
 import { generateHash, createCSS } from './engine';
 import { useVRegistry } from './vRegistry';
 
-export const Styled = <C extends React.ElementType = 'div'>({
-  as, vStyle, className, ...props
-  }: { as?: C; vStyle?: any } & React.ComponentPropsWithoutRef<C>) => {
-  const Component = as || 'div';
-  const register = useVRegistry();
+type StyledProps<C extends React.ElementType> = {
+  as?: C;
+  vStyle?: any;
+} & React.ComponentPropsWithoutRef<C>;
 
-  const { hash, css } = useMemo(() => {
-    if (!vStyle) return { hash: '', css: '' };
-    const h = generateHash(vStyle);
-    const c = createCSS(h, vStyle);
-    return { hash: h, css: c };
-  }, [vStyle]);
+interface StyledComponent {
+  <C extends React.ElementType = 'div'>(
+    props: StyledProps<C> & { ref?: React.Ref<React.ComponentRef<C>> }
+  ): React.ReactElement | null;
+  displayName?: string;
+}
 
-  if (typeof window === 'undefined' && register && hash && css) register(hash, css);
+export const Styled: StyledComponent = forwardRef(
+  <C extends React.ElementType = 'div'>(
+    { as, vStyle, className, ...props }: StyledProps<C>,
+    ref: React.Ref<any>
+  ) => {
+    const Component = as || 'div';
+    const register = useVRegistry();
 
-  useInsertionEffect(() => {
-    if (register && hash && css) register(hash, css);
-  }, [hash, css, register]);
+    const { hash, css } = useMemo(() => {
+      if (!vStyle) return { hash: '', css: '' };
+      const h = generateHash(vStyle);
+      const c = createCSS(h, vStyle);
+      return { hash: h, css: c };
+    }, [vStyle]);
 
-  return <Component className={`${hash} ${className || ''}`.trim()} {...props} />;
-};
+    if (typeof window === 'undefined' && register && hash && css) {
+      register(hash, css);
+    }
+
+    useInsertionEffect(() => {
+      if (register && hash && css) register(hash, css);
+    }, [hash, css, register]);
+
+    return (
+      <Component
+        {...props}
+        ref={ref}
+        className={`${hash} ${className || ''}`.trim()}
+      />
+    );
+  }
+) as any;
+
+Styled.displayName = 'Styled';
