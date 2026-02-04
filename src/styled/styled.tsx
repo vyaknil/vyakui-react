@@ -48,4 +48,4 @@ export const Styled: StyledComponent = forwardRef(
   }
 ) as any;
 
-Styled.displayName = 'Styled';
+Styled.displayName = 'styled';

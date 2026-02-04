@@ -4,7 +4,7 @@ type ColorAccent = "accent1" | "accent2" | "accent3" | "accent4" | "accent5";
 type ColorStatus = "success" | "warning" | "error" | "info";
 
 export type Color = ColorGray | ColorAccent | ColorStatus;
-
+export type Colors = [Color, Color];
 
 // object
 const colorGray: Record<ColorGray, string> = {
