@@ -1,5 +1,6 @@
 import React from "react";
 import { VStyle } from "../styled/engine";
+import { VLink } from './vLink'
 
 
 export const transitionDuration: string = ".333s";
@@ -27,3 +28,5 @@ export const disabledStyle: VStyle = {
   pointerEvents: "none",
   cursor:        "default"
 }
+
+export * from "./vLink";
