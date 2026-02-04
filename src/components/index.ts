@@ -1,6 +1,5 @@
 import React from "react";
 import { VStyle } from "../styled/engine";
-import { VLink } from './vLink'
 
 
 export const transitionDuration: string = ".333s";

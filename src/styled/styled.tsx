@@ -1,11 +1,11 @@
 "use client";
 import React, { useMemo, useInsertionEffect, forwardRef } from 'react';
-import { generateHash, createCSS } from './engine';
+import { generateHash, createCSS, VStyle } from './engine';
 import { useVRegistry } from './vRegistry';
 
 type StyledProps<C extends React.ElementType> = {
   as?: C;
-  vStyle?: any;
+  vStyle?: VStyle;
 } & React.ComponentPropsWithoutRef<C>;
 
 interface StyledComponent {
