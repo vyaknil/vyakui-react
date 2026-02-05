@@ -45,6 +45,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
 
 **VStyle** = `CSSProperties & { [key: string]: CSSProperties }` <br>
 **Color** = `"gray1/2/3/4/5" | "accent1/2/3/4/5" | "success/warning/error/info"` <br>
+**Colors** = `[Color, Color]` <br>
 **Font** = `"heading1/2/3/4/5/6" | "body1/2/3/4/5/6"` <br>
 **Numbers** = `[number] | [number, number] | [number, number, number] | [number, number, number, number]` <br>
 **Size** = `"default" | "xs" | "sm" | "md" | "lg" | "xl"` <br>
@@ -59,7 +60,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
 
 **getRem** — converts `number` in px to **rem** <br>
 **mapRem** — converts `Numbers` in px to **rem** string with multiple values (for padding, borderRadius)<br>
-**getFont** — return `VStyle` from `size` entry <br>
+**getFont** — return `VStyle` from `font` entry <br>
 
 ## Styled component
 
@@ -114,17 +115,38 @@ Use the `as` prop to render any HTML element. TypeScript will automatically enfo
 
 | Prop       | Type          | Default     | Description                                          |
 |:-----------|:--------------|:------------|:-----------------------------------------------------|
-| `as`       | `ElementType` | `'div'`     | The HTML tag or component to render.                 |
+| `as`       | `ElementType` | `"div"`     | HTML tag or component to render.                     |
 | `vStyle`   | `VStyle`      | `undefined` | CSS object supporting nesting and at-rules.          |
-| `...props` | `Attributes`  | -           | Any valid attribute for the element defined in `as`. |
+| `ref`      | `Ref`         | `undefined` | React refs                                           |
+| `...props` | `Attributes`  | -           | any valid attribute for the element defined in `as`. |
 
 ## VLink Component
 
 ### Props
 
+```ts
+/* Types */
+type Target = "_blank" | "_self" | "_top" | "_parent";
+```
+
 extends Styled Props
 
-| Prop        | Type      | Default              | Description                  |
-|:------------|:----------|:---------------------|:-----------------------------|
-| `disabled`  | `boolean` | `false`              | Enables or disables link     |
-| `colorText` | `Colors`  | `["gray1", "gray2"]` | Set default and hover colors |
+| Prop        | Type                | Default              | Description                   |
+|:------------|:--------------------|:---------------------|:------------------------------|
+| `disabled`  | `boolean`           | `false`              | disables link                 |
+| `colorText` | `Colors`            | `["gray1", "gray2"]` | default and hover colors      |
+| `text`      | `Font`              | `"body6"`            | font styles                   |
+| `href`      | `string`            | `undefined`          | link href (overrides onClick) |
+| `target`    | `Target`            | `"_self"`            | link target                   |
+| `onClick`   | `MouseEventHandler` | `undefined`          | onClick event if href not set |
+#### Next.js Link
+
+```tsx
+import Link from "next/link";
+import { VLink } from "vyakui-react";
+
+
+<VLink as={Link} href="https://nextjs.org">
+  Next.js Link
+</VLink>
+```

@@ -1,6 +1,6 @@
 import React from "react";
 import { Styled } from "../styled/styled";
-import { color, Colors } from '../types'
+import { color, Colors, font, Font, getFont } from '../types'
 import { BaseStyledProps, disabledStyle, PolymorphicComponent, transitionDuration, transitionFunction } from "./index";
 import { VStyle } from '../styled/engine';
 
@@ -8,10 +8,10 @@ import { VStyle } from '../styled/engine';
 type Target = "_blank" | "_self" | "_top" | "_parent";
 
 interface VLinkProps {
-  disabled?: boolean;
   colorText?: Colors;
   href?: string;
   target?: Target;
+  text?: Font;
 }
 
 export const VLink: PolymorphicComponent<VLinkProps> = React.forwardRef(
@@ -20,6 +20,7 @@ export const VLink: PolymorphicComponent<VLinkProps> = React.forwardRef(
       disabled = false,
       colorText = ["gray1", "gray2"],
       href, target = "_self",
+      text = "body6",
       onClick,
       ...rest
     }: BaseStyledProps<C, VLinkProps>,
@@ -31,6 +32,7 @@ export const VLink: PolymorphicComponent<VLinkProps> = React.forwardRef(
     const vLinkStyle: VStyle = {
       display: "inline-block",
       color: color[colorTextDefault],
+      ...getFont(font[text]),
       ...(!disabled && {
         transitionDuration:       transitionDuration,
         transitionTimingFunction: transitionFunction,
@@ -61,7 +63,7 @@ export const VLink: PolymorphicComponent<VLinkProps> = React.forwardRef(
 
     return (
       <Styled
-        as={Component}
+        as={"a"} /* for prevent errors */
         ref={ref}
         vStyle={vLinkStyle}
         onClick={onClick}
