@@ -138,15 +138,15 @@ type Variant = "default" | "underline" | "background";
 
 extends Styled Props
 
-| Prop        | Type                | Default              | Description                   |
-|:------------|:--------------------|:---------------------|:------------------------------|
-| `disabled`  | `boolean`           | `false`              | disables link                 |
-| `colorText` | `Colors`            | `["gray1", "gray2"]` | default and hover colors      |
-| `href`      | `string`            | `undefined`          | link href                     |
-| `target`    | `Target`            | `"_self"`            | link target                   |
-| `onClick`   | `MouseEventHandler` | `undefined`          | onClick event if href not set |
-| `variant`   | `Variant`           | `"default"`          | link variant                  |
-| `size`      | `Size`              | `"default"`          | link size                     |
+| Prop        | Type                | Default              | Description                  |
+|:------------|:--------------------|:---------------------|:-----------------------------|
+| `disabled`  | `boolean`           | `false`              | disables link                |
+| `colorText` | `Colors`            | `["gray1", "gray2"]` | default and hover colors     |
+| `href`      | `string`            | `undefined`          | link href                    |
+| `target`    | `Target`            | `"_self"`            | link target                  |
+| `onClick`   | `MouseEventHandler` | `undefined`          | onClick event                |
+| `variant`   | `Variant`           | `"default"`          | link variant                 |
+| `size`      | `Size`              | `"default"`          | link size                    |
 
 for `"background"` variant use second color in `colorText` for background color on hover 
 

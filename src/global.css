@@ -42,13 +42,3 @@ img, picture, video, canvas, svg {
 p, h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
 }
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
-}
