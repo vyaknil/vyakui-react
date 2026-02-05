@@ -1,6 +1,9 @@
 import { CSSProperties } from 'react';
 
-export type VStyle = CSSProperties & { [key: string]: CSSProperties | any };
+
+export type VStyle = CSSProperties & {
+  [K in `&${string}` | `@${string}`]?: VStyle;
+};
 
 export const generateHash = (val: any) => {
   const str = JSON.stringify(val);

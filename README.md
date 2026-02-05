@@ -13,8 +13,9 @@ npm install vyakui-react
 #### React
 
 ```tsx
-import { VRegistry } from 'vyakui-react';
 import { HomePage } from './pages/HomePage';
+import { VRegistry } from 'vyakui-react';
+import "vyakui-react/global.css";
 
 
 export const App = () => (
@@ -28,6 +29,7 @@ export const App = () => (
 
 ```tsx
 import { VRegistry } from 'vyakui-react';
+import "vyakui-react/global.css";
 
 
 export default function RootLayout({children}: { children: React.ReactNode }) {
@@ -40,6 +42,10 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
   );
 }
 ```
+
+### global.css
+
+Reset default styles
 
 ## Types
 
@@ -127,6 +133,7 @@ Use the `as` prop to render any HTML element. TypeScript will automatically enfo
 ```ts
 /* Types */
 type Target = "_blank" | "_self" | "_top" | "_parent";
+type Variant = "default" | "underline" | "background";
 ```
 
 extends Styled Props
@@ -135,10 +142,14 @@ extends Styled Props
 |:------------|:--------------------|:---------------------|:------------------------------|
 | `disabled`  | `boolean`           | `false`              | disables link                 |
 | `colorText` | `Colors`            | `["gray1", "gray2"]` | default and hover colors      |
-| `text`      | `Font`              | `"body6"`            | font styles                   |
-| `href`      | `string`            | `undefined`          | link href (overrides onClick) |
+| `href`      | `string`            | `undefined`          | link href                     |
 | `target`    | `Target`            | `"_self"`            | link target                   |
 | `onClick`   | `MouseEventHandler` | `undefined`          | onClick event if href not set |
+| `variant`   | `Variant`           | `"default"`          | link variant                  |
+| `size`      | `Size`              | `"default"`          | link size                     |
+
+for `"background"` variant use second color in `colorText` for background color on hover 
+
 #### Next.js Link
 
 ```tsx

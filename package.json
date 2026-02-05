@@ -9,6 +9,14 @@
   "files": [
     "dist"
   ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./global.css": "./dist/index.css"
+  },
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --minify --clean",
     "prepublishOnly": "npm run build",

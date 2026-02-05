@@ -1,0 +1,54 @@
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font: inherit;
+  color: inherit;
+  list-style: none;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  outline: none;
+  transition-duration: inherit;
+  transition-timing-function: inherit;
+  transition-property: none;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100dvh;
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.icon {
+  height: 1em;
+  width: auto;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

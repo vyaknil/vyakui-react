@@ -1,17 +1,35 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Styled } from "../styled/styled";
-import { color, Colors, font, Font, getFont } from '../types'
+import { color, Colors, Font, font, getFont, getRem, mapRem, Numbers, Size } from '../types';
 import { BaseStyledProps, disabledStyle, PolymorphicComponent, transitionDuration, transitionFunction } from "./index";
 import { VStyle } from '../styled/engine';
 
 
 type Target = "_blank" | "_self" | "_top" | "_parent";
+type Variant = "default" | "underline" | "background";
+type Config = { 
+  text: Font; 
+  padding: Numbers; 
+  gap: number; 
+  radius: Numbers; 
+  lineHeight: number;
+}
+
+const getConfig: Record<Size, Config> = {
+  default: {text: "body6", padding: [4, 4],  gap: 4, radius: [4],  lineHeight: 1},
+  xs:      {text: "body5", padding: [4, 6],  gap: 4, radius: [6],  lineHeight: 1},
+  sm:      {text: "body4", padding: [6, 6],  gap: 4, radius: [6],  lineHeight: 1},
+  md:      {text: "body3", padding: [6, 8],  gap: 8, radius: [8],  lineHeight: 2},
+  lg:      {text: "body2", padding: [8, 8],  gap: 8, radius: [8],  lineHeight: 2},
+  xl:      {text: "body1", padding: [8, 10], gap: 8, radius: [10], lineHeight: 2}
+};
 
 interface VLinkProps {
   colorText?: Colors;
   href?: string;
   target?: Target;
-  text?: Font;
+  variant?: Variant;
+  size?: Size;
 }
 
 export const VLink: PolymorphicComponent<VLinkProps> = React.forwardRef(
@@ -20,59 +38,81 @@ export const VLink: PolymorphicComponent<VLinkProps> = React.forwardRef(
       disabled = false,
       colorText = ["gray1", "gray2"],
       href, target = "_self",
-      text = "body6",
+      variant = "default",
+      size = "default",
       onClick,
       ...rest
     }: BaseStyledProps<C, VLinkProps>,
     ref: React.Ref<any>) => {
 
-    const Component = as || "a";
-    const [colorTextDefault, colorTextHover] = colorText;
+    const [colorDefault, colorHover] = colorText;
+    const config = getConfig[size];
 
-    const vLinkStyle: VStyle = {
-      display: "inline-block",
-      color: color[colorTextDefault],
-      ...getFont(font[text]),
-      ...(!disabled && {
-        transitionDuration:       transitionDuration,
-        transitionTimingFunction: transitionFunction,
-        transitionProperty:       "color",
-        cursor:                   "pointer",
-        "&:hover":                {
-          color: color[colorTextHover]
+    const finalVStyle = useMemo(() => {
+      const hoverColor = color[colorHover];
+
+      const getVariant: Record<Variant, VStyle> = {
+        default:    {
+          transitionProperty: "color",
+          "&:hover":          {color: hoverColor}
+        },
+        underline:  {
+          position:           "relative",
+          transitionProperty: "color",
+          "&::after":         {
+            content:            '""',
+            position:           "absolute",
+            top:                "100%",
+            height:             getRem(config.lineHeight),
+            width:              "0",
+            transitionProperty: "background-color",
+            backgroundColor:    "transparent"
+          },
+          "&:hover":          {
+            color:      hoverColor,
+            "&::after": {width: "100%", backgroundColor: hoverColor}
+          }
+        },
+        background: {
+          transitionProperty: "background-color",
+          padding:            mapRem(config.padding),
+          borderRadius:       mapRem(config.radius),
+          "&:hover":          {backgroundColor: hoverColor}
         }
-      }),
-      ...(disabled && disabledStyle),
-      ...vStyle
-    }
+      };
 
-    if (href) {
-      return (
-        <Styled
-          as={Component}
-          ref={ref}
-          vStyle={vLinkStyle}
-          href={href}
-          target={target}
-          {...rest}
-        >
-          {children}
-        </Styled>
-      );
-    }
+      const baseStyle: VStyle = {
+        display: "inline-block",
+        color:   color[colorDefault],
+        gap:     config.gap,
+        ...getFont(font[config.text]),
+        ...(!disabled? {
+          transitionDuration,
+          transitionTimingFunction: transitionFunction,
+          cursor:                   "pointer",
+          ...getVariant[variant]
+        } : disabledStyle),
+        ...vStyle
+      };
+
+      return baseStyle;
+    }, [disabled, variant, size, colorDefault, colorHover, vStyle]);
+
+    const FinalComponent = href? (as || "a") : "span";
 
     return (
       <Styled
-        as={"a"} /* for prevent errors */
+        as={FinalComponent}
         ref={ref}
-        vStyle={vLinkStyle}
-        onClick={onClick}
+        vStyle={finalVStyle}
+        href={href? href : undefined}
+        target={href? target : undefined}
+        onClick={disabled? undefined : onClick}
         {...rest}
       >
         {children}
       </Styled>
     );
-
   }) as any;
 
-VLink.displayName = "vLink";
+VLink.displayName = "VLink";

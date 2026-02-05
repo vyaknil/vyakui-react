@@ -24,7 +24,7 @@ export interface PolymorphicComponent<P = {}> {
 }
 
 export const disabledStyle: VStyle = {
-  opacity:       "0.6",
+  opacity:       "0.4",
   pointerEvents: "none",
   cursor:        "default"
 }
