@@ -30,3 +30,4 @@ export const disabledStyle: VStyle = {
 }
 
 export * from "./vLink";
+export * from "./vGlass";
