@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react'
-import { jsx } from 'react/jsx-runtime'
 import { VStyle } from '../styled/engine'
 import { Styled } from '../styled/styled'
 import { font, Font, getFont, getRem, mapRem, Numbers } from '../types'

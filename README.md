@@ -138,17 +138,17 @@ type Variant = "default" | "underline" | "background";
 
 extends Styled Props
 
-| Prop        | Type                | Default              | Description                  |
-|:------------|:--------------------|:---------------------|:-----------------------------|
-| `disabled`  | `boolean`           | `false`              | disables link                |
-| `colorText` | `Colors`            | `["gray1", "gray2"]` | default and hover colors     |
-| `href`      | `string`            | `undefined`          | link href                    |
-| `target`    | `Target`            | `"_self"`            | link target                  |
-| `onClick`   | `MouseEventHandler` | `undefined`          | onClick event                |
-| `variant`   | `Variant`           | `"default"`          | link variant                 |
-| `size`      | `Size`              | `"default"`          | link size                    |
+| Prop        | Type                | Default              | Description              |
+|:------------|:--------------------|:---------------------|:-------------------------|
+| `disabled`  | `boolean`           | `false`              | disables link            |
+| `colorText` | `Colors`            | `["gray1", "gray2"]` | default and hover colors |
+| `href`      | `string`            | `undefined`          | link href                |
+| `target`    | `Target`            | `"_self"`            | link target              |
+| `onClick`   | `MouseEventHandler` | `undefined`          | onClick event            |
+| `variant`   | `Variant`           | `"default"`          | link variant             |
+| `size`      | `Size`              | `"default"`          | link size                |
 
-for `"background"` variant use second color in `colorText` for background color on hover 
+for `"background"` variant use second color in `colorText` for background color on hover
 
 #### Next.js Link
 
@@ -161,3 +161,50 @@ import { VLink } from "vyakui-react";
   Next.js Link
 </VLink>
 ```
+
+## VFlex Component
+
+### Props
+
+```ts
+/* Types */
+type Direction = "row" | "row-reverse" | "column" | "column-reverse";
+type Wrap = "nowrap" | "wrap" | "wrap-reverse";
+type Align = "flex-start" | "flex-end" | "center";
+type Justify = Align | "space-between" | "space-around" | "space-evenly";
+```
+
+extends Styled Props
+
+| Prop        | Type        | Default        | Description         |
+|:------------|:------------|:---------------|:--------------------|
+| `inline`    | `boolean`   | `false`        | inline-flex or flex |
+| `direction` | `Direction` | `"row"`        | flex direction      |
+| `wrap`      | `Wrap`      | `"nowrap"`     | flex wrap           |
+| `align`     | `Align`     | `"flex-start"` | align items         |
+| `justify`   | `Justify`   | `"flex-start"` | justify content     |
+| `gap`       | `number`    | `0`            | gap between items   |
+| `padding`   | `Numbers`   | `[0]`          | padding             |
+| `radius`    | `Numbers`   | `[0]`          | border radius       |
+| `text`      | `Font`      | `undefined`    | font style          |
+
+## VButton Component
+
+### Props
+
+```ts
+/* Types */
+type Variant = "default" | "outline";
+```
+
+extends Styled Props
+
+| Prop        | Type      | Default              | Description                         |
+|:------------|:----------|:---------------------|:------------------------------------|
+| `disabled`  | `boolean` | `false`              | disables button                     |
+| `variant`   | `Variant` | `"default"`          | button variant                      |
+| `size`      | `Size`    | `"default"`          | button size                         |
+| `colorBg`   | `Colors`  | `["gray1", "gray2"]` | background default and hover colors |
+| `colorText` | `Colors`  | `["gray5", "gray5"]` | text default and hover colors       |
+
+`colorBg` does't work in `outline` variant

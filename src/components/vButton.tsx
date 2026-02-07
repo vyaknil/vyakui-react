@@ -26,7 +26,6 @@ const getConfig: Record<Size, Config> = {
 
 interface VButtonProps {
   disabled?: boolean;
-  outline?: boolean;
   size?: Size;
   colorBg?: Colors;
   colorText?: Colors;
