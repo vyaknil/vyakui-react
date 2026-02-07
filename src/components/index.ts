@@ -11,7 +11,6 @@ export type BaseStyledProps<C extends React.ElementType, P = {}> =
     as?: C;
     vStyle?: VStyle;
     children?: React.ReactNode;
-    disabled?: boolean;
   } &
   Omit<React.ComponentPropsWithoutRef<C>, keyof P | 'as' | 'vStyle'>;
 
@@ -30,3 +29,5 @@ export const disabledStyle: VStyle = {
 }
 
 export * from "./vLink";
+export * from "./vFlex";
+export * from "./vButton";

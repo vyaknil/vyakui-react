@@ -16,15 +16,16 @@ type Config = {
 }
 
 const getConfig: Record<Size, Config> = {
-  default: {text: "body6", padding: [4, 4],  gap: 4, radius: [4],  lineHeight: 1},
+  default: {text: "body6", padding: [4],  gap: 4, radius: [4],  lineHeight: 1},
   xs:      {text: "body5", padding: [4, 6],  gap: 4, radius: [6],  lineHeight: 1},
-  sm:      {text: "body4", padding: [6, 6],  gap: 4, radius: [6],  lineHeight: 1},
+  sm:      {text: "body4", padding: [6],  gap: 4, radius: [6],  lineHeight: 1},
   md:      {text: "body3", padding: [6, 8],  gap: 8, radius: [8],  lineHeight: 2},
-  lg:      {text: "body2", padding: [8, 8],  gap: 8, radius: [8],  lineHeight: 2},
+  lg:      {text: "body2", padding: [8],  gap: 8, radius: [8],  lineHeight: 2},
   xl:      {text: "body1", padding: [8, 10], gap: 8, radius: [10], lineHeight: 2}
 };
 
 interface VLinkProps {
+  disabled?: boolean;
   colorText?: Colors;
   href?: string;
   target?: Target;
@@ -74,7 +75,7 @@ export const VLink: PolymorphicComponent<VLinkProps> = React.forwardRef(
           }
         },
         background: {
-          transitionProperty: "background-color",
+          transitionProperty: "color, background-color",
           padding:            mapRem(config.padding),
           borderRadius:       mapRem(config.radius),
           "&:hover":          {backgroundColor: hoverColor}
@@ -113,6 +114,6 @@ export const VLink: PolymorphicComponent<VLinkProps> = React.forwardRef(
         {children}
       </Styled>
     );
-  }) as any;
+  }) as PolymorphicComponent<VLinkProps>;
 
-VLink.displayName = "VLink";
+VLink.displayName = "vLink";
