@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react'
-import { VStyle } from '../styled'
-import { Styled } from '../styled'
-import { font, Font, getFont, getRem, mapRem, Numbers } from '../index'
+import { VStyle } from '../styled/engine'
+import { Styled } from '../styled/styled'
+import { font, Font, getFont } from '../types/font'
+import { getRem, mapRem, Numbers } from '../types/number'
 import { BaseStyledProps, PolymorphicComponent } from './index'
 
 
