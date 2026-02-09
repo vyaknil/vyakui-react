@@ -17,6 +17,8 @@
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "vyakui-react"
+  ],
+  "exclude": ["node_modules"]
 }

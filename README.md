@@ -4,9 +4,7 @@
 
 ## Installation
 
-```bash
-npm install vyakui-react
-```
+copy vyakui-react folder to yor project
 
 ### Root layout
 
@@ -14,8 +12,8 @@ npm install vyakui-react
 
 ```tsx
 import { HomePage } from './pages/HomePage';
-import { VRegistry } from 'vyakui-react';
-import "vyakui-react/global.css";
+import { VRegistry } from '@/vyakui-react';
+import "@/vyakui-react/global.css";
 
 
 export const App = () => (
@@ -28,8 +26,8 @@ export const App = () => (
 #### Next.js
 
 ```tsx
-import { VRegistry } from 'vyakui-react';
-import "vyakui-react/global.css";
+import { VRegistry } from '@/vyakui-react';
+import "@/vyakui-react/global.css";
 
 
 export default function RootLayout({children}: { children: React.ReactNode }) {
@@ -154,7 +152,7 @@ for `"background"` variant use second color in `colorText` for background color 
 
 ```tsx
 import Link from "next/link";
-import { VLink } from "vyakui-react";
+import { VLink } from "@/vyakui-react";
 
 
 <VLink as={Link} href="https://nextjs.org">
