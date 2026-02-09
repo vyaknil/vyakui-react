@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
-import { VStyle } from '../styled/engine'
-import { color, Colors, Font, getRem, Numbers, Size } from '../types'
+import { VStyle } from '../styled'
+import { color, type Colors, type Font, getRem, Numbers, Size } from '../index'
 import { BaseStyledProps, disabledStyle, PolymorphicComponent, transitionDuration, transitionFunction } from './index'
 import { VFlex } from './vFlex'
 

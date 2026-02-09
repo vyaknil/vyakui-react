@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
 import { Styled } from "../styled/styled";
-import { color, Colors, Font, font, getFont, getRem, mapRem, Numbers, Size } from '../types';
+import { color, Colors, Font, font, getFont, getRem, mapRem, Numbers, Size } from '../index';
 import { BaseStyledProps, disabledStyle, PolymorphicComponent, transitionDuration, transitionFunction, VFlex } from "./index";
-import { VStyle } from '../styled/engine';
+import { VStyle } from '../styled';
 
 
 type Target = "_blank" | "_self" | "_top" | "_parent";
