@@ -18,9 +18,9 @@
     "./global.css": "./dist/index.css"
   },
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --minify --clean",
+    "build": "tsup src/index.ts",
     "prepublishOnly": "npm run build",
-    "dev": "tsup src/index.ts --format cjs,esm --watch --dts",
+    "dev": "tsup src/index.ts --watch",
     "lint": "tsc"
   },
   "keywords": [
