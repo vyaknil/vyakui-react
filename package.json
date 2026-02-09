@@ -14,8 +14,7 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
-    "./global.css": "./dist/global.css",
-    "./styles.css": "./dist/global.css"
+    "./global.css": "./dist/index.css"
   },
   "scripts": {
     "build": "tsup && tsc --project tsconfig.build.json --noEmit",
