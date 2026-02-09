@@ -1,5 +1,5 @@
 import React from "react";
-import { VStyle } from "../styled/engine";
+import { VStyle } from "../styled";
 
 
 export const transitionDuration: string = ".333s";
@@ -31,3 +31,7 @@ export const disabledStyle: VStyle = {
 export * from "./vLink";
 export * from "./vFlex";
 export * from "./vButton";
+
+export { VFlex, type VFlexProps } from "./vFlex";
+export { VLink } from "./vLink";
+export { VButton } from "./vButton";

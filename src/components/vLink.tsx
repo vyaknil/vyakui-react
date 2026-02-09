@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { Styled } from "../styled/styled";
 import { color, Colors, Font, font, getFont, getRem, mapRem, Numbers, Size } from '../types';
-import { BaseStyledProps, disabledStyle, PolymorphicComponent, transitionDuration, transitionFunction } from "./index";
+import { BaseStyledProps, disabledStyle, PolymorphicComponent, transitionDuration, transitionFunction, VFlex } from "./index";
 import { VStyle } from '../styled/engine';
 
 
@@ -83,10 +83,7 @@ export const VLink: PolymorphicComponent<VLinkProps> = React.forwardRef(
       };
 
       const baseStyle: VStyle = {
-        display: "inline-block",
         color:   color[colorDefault],
-        gap:     config.gap,
-        ...getFont(font[config.text]),
         ...(!disabled? {
           transitionDuration,
           transitionTimingFunction: transitionFunction,
@@ -102,8 +99,11 @@ export const VLink: PolymorphicComponent<VLinkProps> = React.forwardRef(
     const FinalComponent = href? (as || "a") : "span";
 
     return (
-      <Styled
-        as={FinalComponent}
+      <VFlex
+        inline={true}
+        text={config.text}
+        gap={config.gap}
+        as={FinalComponent as any}
         ref={ref}
         vStyle={finalVStyle}
         href={href? href : undefined}
@@ -112,7 +112,7 @@ export const VLink: PolymorphicComponent<VLinkProps> = React.forwardRef(
         {...rest}
       >
         {children}
-      </Styled>
+      </VFlex>
     );
   }) as PolymorphicComponent<VLinkProps>;
 
