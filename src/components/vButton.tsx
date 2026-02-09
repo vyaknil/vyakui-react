@@ -1,3 +1,4 @@
+"use client";
 import React, { useMemo } from 'react'
 import { VStyle } from '../styled/engine'
 import { color, Colors } from '../types/color'

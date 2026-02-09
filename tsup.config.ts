@@ -9,11 +9,6 @@ export default defineConfig({
   minify: false,
   splitting: false,
   external: ['next/link', 'next/navigation', 'react', 'react-dom'],
-  esbuildOptions(options) {
-    options.banner = {
-      js: '"use client";'
-    };
-  },
   outExtension({ format }) {
     return {
       js: format === 'esm' ? '.mjs' : '.js'
