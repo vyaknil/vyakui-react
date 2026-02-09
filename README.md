@@ -49,7 +49,7 @@ Reset default styles
 
 ## Types
 
-**VStyle** = `CSSProperties & { [key: string]: CSSProperties }` <br>
+**VStyle** = `CSSProperties & { [key: string]: VStyle }` <br>
 **Color** = `"gray1/2/3/4/5" | "accent1/2/3/4/5" | "success/warning/error/info"` <br>
 **Colors** = `[Color, Color]` <br>
 **Font** = `"heading1/2/3/4/5/6" | "body1/2/3/4/5/6"` <br>
