@@ -1,5 +1,4 @@
-"use client";
-import React, { useMemo } from "react";
+import React from "react";
 import { VStyle } from '../styled/engine'
 import { color, Colors } from '../types/color'
 import { Font } from '../types/font'

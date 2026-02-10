@@ -1,5 +1,4 @@
-"use client";
-import React, { useMemo } from 'react'
+import React from 'react'
 import { VStyle } from '../styled/engine'
 import { Styled } from '../styled/styled'
 import { font, Font, getFont } from '../types/font'
