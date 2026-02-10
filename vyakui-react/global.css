@@ -29,13 +29,11 @@ body {
 
 img, picture, video, canvas, svg {
   display: block;
-  max-width: 100%;
-  height: auto;
 }
 
 .icon {
   height: 1em;
-  width: auto;
+  width: 1em;
 }
 
 p, h1, h2, h3, h4, h5, h6 {
