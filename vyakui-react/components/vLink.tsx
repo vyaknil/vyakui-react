@@ -11,11 +11,11 @@ import { VFlex } from './vFlex'
 
 type Target = "_blank" | "_self" | "_top" | "_parent";
 type Variant = "default" | "underline" | "background";
-type Config = { 
-  text: Font; 
-  padding: Numbers; 
-  gap: number; 
-  radius: Numbers; 
+type Config = {
+  text: Font;
+  padding: Numbers;
+  gap: number;
+  radius: Numbers;
   lineHeight: number;
 }
 
@@ -28,7 +28,7 @@ const getConfig: Record<Size, Config> = {
   xl:      {text: "body1", padding: [8, 10], gap: 8, radius: [10], lineHeight: 2}
 };
 
-interface VLinkProps {
+export interface VLinkProps {
   disabled?: boolean;
   colorText?: Colors;
   href?: string;
@@ -53,52 +53,48 @@ export const VLink: PolymorphicComponent<VLinkProps> = React.forwardRef(
     const [colorDefault, colorHover] = colorText;
     const config = getConfig[size];
 
-    const finalVStyle = useMemo(() => {
-      const hoverColor = color[colorHover];
-
-      const getVariant: Record<Variant, VStyle> = {
-        default:    {
-          transitionProperty: "color",
-          "&:hover":          {color: hoverColor}
+    const hoverColor = color[colorHover];
+    const getVariant: Record<Variant, VStyle> = {
+      default:    {
+        transitionProperty: "color",
+        "&:hover":          {color: hoverColor}
+      },
+      underline:  {
+        position:           "relative",
+        transitionProperty: "color",
+        "&::after":         {
+          content:            '""',
+          position:           "absolute",
+          top:                "100%",
+          height:             getRem(config.lineHeight),
+          width:              "0",
+          transitionProperty: "background-color",
+          backgroundColor:    "transparent"
         },
-        underline:  {
-          position:           "relative",
-          transitionProperty: "color",
-          "&::after":         {
-            content:            '""',
-            position:           "absolute",
-            top:                "100%",
-            height:             getRem(config.lineHeight),
-            width:              "0",
-            transitionProperty: "background-color",
-            backgroundColor:    "transparent"
-          },
-          "&:hover":          {
-            color:      hoverColor,
-            "&::after": {width: "100%", backgroundColor: hoverColor}
-          }
-        },
-        background: {
-          transitionProperty: "color, background-color",
-          padding:            mapRem(config.padding),
-          borderRadius:       mapRem(config.radius),
-          "&:hover":          {backgroundColor: hoverColor}
+        "&:hover":          {
+          color:      hoverColor,
+          "&::after": {width: "100%", backgroundColor: hoverColor}
         }
-      };
+      },
+      background: {
+        transitionProperty: "color, background-color",
+        padding:            mapRem(config.padding),
+        borderRadius:       mapRem(config.radius),
+        "&:hover":          {backgroundColor: hoverColor}
+      }
+    };
 
-      const baseStyle: VStyle = {
-        color:   color[colorDefault],
-        ...(!disabled? {
-          transitionDuration,
-          transitionTimingFunction: transitionFunction,
-          cursor:                   "pointer",
-          ...getVariant[variant]
-        } : disabledStyle),
-        ...vStyle
-      };
 
-      return baseStyle;
-    }, [disabled, variant, size, colorDefault, colorHover, vStyle]);
+    const finalVStyle: VStyle = {
+      color:   color[colorDefault],
+      ...(!disabled? {
+        transitionDuration,
+        transitionTimingFunction: transitionFunction,
+        cursor:                   "pointer",
+        ...getVariant[variant]
+      } : disabledStyle),
+      ...vStyle
+    }
 
     const FinalComponent = href? (as || "a") : "span";
 
@@ -107,6 +103,7 @@ export const VLink: PolymorphicComponent<VLinkProps> = React.forwardRef(
         inline={true}
         text={config.text}
         gap={config.gap}
+        align={"center"}
         as={FinalComponent as any}
         ref={ref}
         vStyle={finalVStyle}

@@ -28,7 +28,7 @@ const getConfig: Record<Size, Config> = {
   xl:      {text: "body1", padding: [14, 24], radius: [14], gap: 8, strokeWidth: 2}
 }
 
-interface VButtonProps {
+export interface VButtonProps {
   disabled?: boolean;
   size?: Size;
   colorBg?: Colors;
@@ -55,42 +55,37 @@ export const VButton: PolymorphicComponent<VButtonProps> = React.forwardRef(
     const config = getConfig[size];
     const Component = as || "button";
 
-    const vButtonStyle: VStyle = useMemo(() => {
-
-      const getVariant: Record<Variant, VStyle> = {
-        default: {
-          backgroundColor:    color[colorBgDefault],
-          transitionProperty: "color, background-color",
-          "&:hover":          {
-            color:           color[colorHover],
-            backgroundColor: color[colorBgHover]
-          }
-        },
-        outline: {
-          backgroundColor:    "transparent",
-          transitionProperty: "color, outline-color",
-          outlineStyle:       "solid",
-          outlineWidth:       getRem(config.strokeWidth),
-          outlineColor:       "currentColor",
-          "&:hover":          {
-            color: color[colorHover]
-          }
+    const getVariant: Record<Variant, VStyle> = {
+      default: {
+        backgroundColor:    color[colorBgDefault],
+        transitionProperty: "color, background-color",
+        "&:hover":          {
+          color:           color[colorHover],
+          backgroundColor: color[colorBgHover]
+        }
+      },
+      outline: {
+        backgroundColor:    "transparent",
+        transitionProperty: "color, outline-color",
+        outlineStyle:       "solid",
+        outlineWidth:       getRem(config.strokeWidth),
+        outlineColor:       "currentColor",
+        "&:hover":          {
+          color: color[colorHover]
         }
       }
+    }
 
-      const baseStyle: VStyle = {
-        color: color[colorDefault],
-        ...(!disabled? {
-          cursor:                   "pointer",
-          transitionDuration:       transitionDuration,
-          transitionTimingFunction: transitionFunction,
-          ...getVariant[variant]
-        } : disabledStyle),
-        ...vStyle
-      }
-
-      return baseStyle;
-    }, [disabled, variant, size, colorBg, colorText, vStyle]);
+    const vButtonStyle: VStyle = {
+      color: color[colorDefault],
+      ...(!disabled? {
+        cursor:                   "pointer",
+        transitionDuration:       transitionDuration,
+        transitionTimingFunction: transitionFunction,
+        ...getVariant[variant]
+      } : disabledStyle),
+      ...vStyle
+    }
 
     return (
       <VFlex

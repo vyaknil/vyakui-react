@@ -40,20 +40,18 @@ export const VFlex: PolymorphicComponent<VFlexProps> = React.forwardRef(
     }: BaseStyledProps<C, VFlexProps>,
     ref: React.Ref<any>) => {
 
-    const vFlexStyle: VStyle = useMemo(() => {
-      return ({
-        display:        inline? "inline-flex" : "flex",
-        flexDirection:  direction,
-        flexWrap:       wrap,
-        alignItems:     align,
-        justifyContent: justify,
-        gap:            getRem(gap),
-        padding:        mapRem(padding),
-        borderRadius:   mapRem(radius),
-        ...(text && getFont(font[text])),
-        ...vStyle
-      });
-    }, [inline, direction, wrap, align, justify, gap, padding, radius, text])
+    const vFlexStyle: VStyle = {
+      display:        inline? "inline-flex" : "flex",
+      flexDirection:  direction,
+      flexWrap:       wrap,
+      alignItems:     align,
+      justifyContent: justify,
+      gap:            getRem(gap),
+      padding:        mapRem(padding),
+      borderRadius:   mapRem(radius),
+      ...(text && getFont(font[text])),
+      ...vStyle
+    }
 
     return (
       <Styled

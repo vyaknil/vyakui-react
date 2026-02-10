@@ -3,7 +3,6 @@ import React, { useMemo, useInsertionEffect, forwardRef } from 'react';
 import { generateHash, createCSS, VStyle } from './engine';
 import { useVRegistry } from './vRegistry';
 
-
 type StyledProps<C extends React.ElementType> = {
   as?: C;
   vStyle?: VStyle;
@@ -25,12 +24,17 @@ export const Styled: StyledComponent = forwardRef(
     const Component = as || 'div';
     const register = useVRegistry();
 
+    const styleKey = useMemo(() =>
+        vStyle ? JSON.stringify(vStyle) : '',
+      [vStyle]
+    );
+
     const {hash, css} = useMemo(() => {
       if (!vStyle) return {hash: '', css: ''};
       const h = generateHash(vStyle);
       const c = createCSS(h, vStyle);
       return {hash: h, css: c};
-    }, [vStyle]);
+    }, [styleKey]);
 
     if (typeof window === 'undefined' && register && hash && css) {
       register(hash, css);

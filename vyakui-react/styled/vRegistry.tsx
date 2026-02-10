@@ -1,6 +1,5 @@
 "use client";
-import React, { createContext, useContext, useRef, useState } from 'react';
-
+import React, { createContext, useContext, useRef, useState, useCallback } from 'react';
 
 let useServerInsertedHTML: any = null;
 try { useServerInsertedHTML = require('next/navigation').useServerInsertedHTML; } catch (e) {}
@@ -8,22 +7,29 @@ try { useServerInsertedHTML = require('next/navigation').useServerInsertedHTML; 
 const VRegistryContext = createContext<((h: string, c: string) => void) | null>(null);
 
 export const VRegistry = ({children}: { children: React.ReactNode }) => {
-  const [inserted] = useState(() => new Set<string>());
+  const [inserted] = useState(() => new Map<string, string>());
   const serverRules = useRef<string[]>([]);
 
-  const register = (hash: string, css: string) => {
-    if (inserted.has(hash)) return;
-    inserted.add(hash);
+  const register = useCallback((hash: string, css: string) => {
+    const existing = inserted.get(hash);
+    if (existing === css) return;
+
+    inserted.set(hash, css);
 
     if (typeof window === 'undefined') {
       serverRules.current.push(css);
     } else {
+      const oldStyle = document.querySelector(`style[data-vui="${hash}"]`);
+      if (oldStyle) {
+        oldStyle.remove();
+      }
+
       const style = document.createElement('style');
       style.setAttribute('data-vui', hash);
       style.innerHTML = css;
       document.head.appendChild(style);
     }
-  };
+  }, [inserted]);
 
   if (useServerInsertedHTML) {
     useServerInsertedHTML(() => {
