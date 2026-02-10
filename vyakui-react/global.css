@@ -16,7 +16,7 @@
   transition-property: none;
 }
 
-html, body {
+html, body, section {
   width: 100%;
   scroll-behavior: smooth;
 }
