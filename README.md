@@ -206,3 +206,17 @@ extends Styled Props
 | `colorText` | `Colors`  | `["gray5", "gray5"]` | text default and hover colors       |
 
 `colorBg` does't work in `outline` variant
+
+## VMasonry Component
+
+### Props
+```ts
+/* Types */
+type AdaptiveColumns = number | Partial<Record<Size, number>>;
+```
+
+extends VFlex Props except direction and wrap
+
+| Prop      | Type              | Default | Description  |
+|:----------|:------------------|:--------|:-------------|
+| `columns` | `AdaptiveColumns` | `1`     | column count |

@@ -13,6 +13,7 @@ import { type BaseStyledProps, type PolymorphicComponent, transitionDuration, tr
 import { VFlex } from "./components/vFlex";
 import { VButton } from "./components/vButton";
 import { VLink } from "./components/vLink";
+import { VMasonry } from './components/vMasonry'
 
 
 export type {
@@ -42,5 +43,6 @@ export {
   disabledStyle,
   VFlex,
   VButton,
-  VLink
+  VLink,
+  VMasonry
 }
