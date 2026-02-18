@@ -1,4 +1,5 @@
-import React from 'react'
+"use client";
+import React, { useState, useEffect, useMemo } from 'react'
 import { VStyle } from '../styled/engine'
 import { Styled } from '../styled/styled'
 import { font, getFont } from '../types/font'
@@ -8,9 +9,28 @@ import { BaseStyledProps, PolymorphicComponent } from './index'
 import { VFlexProps } from './vFlex'
 
 export type AdaptiveColumns = number | Partial<Record<Size, number>>;
+
 export interface VMasonryProps extends Omit<VFlexProps, 'direction' | 'wrap' | 'align' | 'justify'> {
   columns?: AdaptiveColumns;
 }
+
+const getActiveColumns = (cols: AdaptiveColumns): number => {
+  if (typeof cols === 'number') return cols;
+  if (typeof window === 'undefined') return cols.default || 1;
+
+  const width = window.innerWidth;
+  const sortedBreakpoints = (Object.keys(cols) as Size[])
+  .filter(k => k !== 'default')
+  .sort((a, b) => size[b] - size[a]); // От большего к меньшему
+
+  for (const key of sortedBreakpoints) {
+    if (width >= size[key]) {
+      return cols[key] as number;
+    }
+  }
+
+  return cols.default || 1;
+};
 
 export const VMasonry: PolymorphicComponent<VMasonryProps> = React.forwardRef(
   <C extends React.ElementType = "div">({
@@ -24,59 +44,45 @@ export const VMasonry: PolymorphicComponent<VMasonryProps> = React.forwardRef(
     }: BaseStyledProps<C, VMasonryProps>,
     ref: React.Ref<any>) => {
 
-    const getContainerStyles = (): VStyle => {
-      return {
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: getRem(gap),
-        alignItems: 'flex-start',
-      };
-    };
-    const getItemStyles = (cols: AdaptiveColumns): VStyle => {
-      const gapVal = getRem(gap);
+    const [columnCount, setColumnCount] = useState(1);
 
-      if (typeof cols === 'number') {
-        return {
-          flex: `0 0 calc((100% - (${cols} - 1) * ${gapVal}) / ${cols})`,
-          maxWidth: `calc((100% - (${cols} - 1) * ${gapVal}) / ${cols})`,
-          boxSizing: 'border-box',
-        };
-      }
+    useEffect(() => {
+      const updateColumns = () => setColumnCount(getActiveColumns(columns));
+      updateColumns();
+      window.addEventListener('resize', updateColumns);
+      return () => window.removeEventListener('resize', updateColumns);
+    }, [columns]);
 
-      const styles: VStyle = {
-        boxSizing: 'border-box',
-      };
+    const columnsArray = useMemo(() => {
+      const result: React.ReactNode[][] = Array.from({ length: columnCount }, () => []);
 
-      const keys = (Object.keys(cols) as Size[]).sort((a, b) => size[a] - size[b]);
-
-      keys.forEach((key) => {
-        const value = cols[key];
-        const widthCalc = `calc((100% - (${value} - 1) * ${gapVal}) / ${value})`;
-
-        if (key === 'default') {
-          styles.flex = `0 0 ${widthCalc}`;
-          styles.maxWidth = widthCalc;
-        } else {
-          styles[`@media (min-width: ${size[key]}px)`] = {
-            flex: `0 0 ${widthCalc}`,
-            maxWidth: widthCalc,
-          };
+      React.Children.forEach(children, (child, index) => {
+        if (child !== undefined && child !== null) {
+          result[index % columnCount].push(child);
         }
       });
-      return styles;
-    };
+      return result;
+    }, [children, columnCount]);
+
+    const gapVal = getRem(gap);
 
     const containerStyle: VStyle = {
-      ...getContainerStyles(),
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      gap: gapVal,
       padding: mapRem(padding),
       borderRadius: mapRem(radius),
       ...(text && getFont(font[text])),
       ...vStyle
     };
 
-    const itemWrapperStyle: VStyle = {
-      display: 'block',
-      ...getItemStyles(columns),
+    const columnStyle: VStyle = {
+      display: 'flex',
+      flexDirection: 'column',
+      flex: 1,
+      gap: gapVal,
+      minWidth: 0
     };
 
     return (
@@ -86,9 +92,9 @@ export const VMasonry: PolymorphicComponent<VMasonryProps> = React.forwardRef(
         vStyle={containerStyle}
         {...rest}
       >
-        {React.Children.map(children, (child, idx) => (
-          <Styled key={idx} as="div" vStyle={itemWrapperStyle}>
-            {child}
+        {columnsArray.map((colChildren, colIdx) => (
+          <Styled key={colIdx} as="div" vStyle={columnStyle}>
+            {colChildren}
           </Styled>
         ))}
       </Styled>
