@@ -24,19 +24,42 @@ export const VMasonry: PolymorphicComponent<VMasonryProps> = React.forwardRef(
     }: BaseStyledProps<C, VMasonryProps>,
     ref: React.Ref<any>) => {
 
-    const getColumnStyles = (cols: AdaptiveColumns): VStyle => {
+    const getContainerStyles = (): VStyle => {
+      return {
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: getRem(gap),
+        alignItems: 'flex-start',
+      };
+    };
+    const getItemStyles = (cols: AdaptiveColumns): VStyle => {
+      const gapVal = getRem(gap);
+
       if (typeof cols === 'number') {
-        return { columnCount: cols };
+        return {
+          flex: `0 0 calc((100% - (${cols} - 1) * ${gapVal}) / ${cols})`,
+          maxWidth: `calc((100% - (${cols} - 1) * ${gapVal}) / ${cols})`,
+          boxSizing: 'border-box',
+        };
       }
-      const styles: VStyle = {};
+
+      const styles: VStyle = {
+        boxSizing: 'border-box',
+      };
+
       const keys = (Object.keys(cols) as Size[]).sort((a, b) => size[a] - size[b]);
+
       keys.forEach((key) => {
         const value = cols[key];
+        const widthCalc = `calc((100% - (${value} - 1) * ${gapVal}) / ${value})`;
+
         if (key === 'default') {
-          styles.columnCount = value;
+          styles.flex = `0 0 ${widthCalc}`;
+          styles.maxWidth = widthCalc;
         } else {
           styles[`@media (min-width: ${size[key]}px)`] = {
-            columnCount: value
+            flex: `0 0 ${widthCalc}`,
+            maxWidth: widthCalc,
           };
         }
       });
@@ -44,23 +67,16 @@ export const VMasonry: PolymorphicComponent<VMasonryProps> = React.forwardRef(
     };
 
     const containerStyle: VStyle = {
-      display: 'block',
-      columnGap: getRem(gap),
-      ...getColumnStyles(columns),
-
+      ...getContainerStyles(),
       padding: mapRem(padding),
       borderRadius: mapRem(radius),
-
       ...(text && getFont(font[text])),
       ...vStyle
     };
 
     const itemWrapperStyle: VStyle = {
       display: 'block',
-      width: '100%',
-      breakInside: 'avoid',
-      overflow: 'hidden',
-      marginBottom: getRem(gap)
+      ...getItemStyles(columns),
     };
 
     return (
